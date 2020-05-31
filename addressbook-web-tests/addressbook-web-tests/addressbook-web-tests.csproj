@@ -64,10 +64,11 @@
     <Compile Include="ContactData.cs" />
     <Compile Include="GroupData.cs" />
     <Compile Include="Login.cs" />
+    <Compile Include="TestBase.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GroupCreationTests.cs" />
-    <Compile Include="AddNewContact.cs" />
+    <Compile Include="AddNewContactTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
