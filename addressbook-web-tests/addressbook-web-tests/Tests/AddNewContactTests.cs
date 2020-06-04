@@ -12,13 +12,13 @@ namespace addressbook_web_tests
         [Test]
         public void TheAddNewContactTest()
         {
-            OpenMainPage();
-            Login(new AccountData("admin", "secret"));
-            GoToAddNewPage();
+            app.Navigate.OpenMainPage();
+            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Navigate.GoToAddNewPage();
             ContactData newcontact = new ContactData("f-name", "l-name");
             newcontact.MiddleName = "m-name";
-            EnterContactButton();
-            Logout();
+            app.Contacts.EnterContactButton();
+            app.LogoutHelper.Logout();
         }
 
     }
