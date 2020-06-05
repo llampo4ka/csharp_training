@@ -12,8 +12,6 @@ namespace addressbook_web_tests
         [Test]
         public void TheAddNewContactTest()
         {
-            app.Navigate.OpenMainPage();
-            app.Auth.Login(new AccountData("admin", "secret"));
             app.Navigate.GoToAddNewPage();
             ContactData newcontact = new ContactData("f-name", "l-name");
             newcontact.MiddleName = "m-name";

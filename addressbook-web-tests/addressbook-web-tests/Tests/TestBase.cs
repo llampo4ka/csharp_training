@@ -20,6 +20,8 @@ namespace addressbook_web_tests
         {
 
             app = new ApplicationManager();
+            app.Navigate.OpenMainPage();
+            app.Auth.Login(new AccountData("admin", "secret"));
 
             /*driver = new ChromeDriver();
             baseURL = "http://localhost/addressbook/";

@@ -16,7 +16,7 @@ namespace addressbook_web_tests
         {
         }
 
-        public void ContactData(ContactData contact)
+        public ContactHelper ContactData(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).Click();
             driver.FindElement(By.Name("firstname")).Clear();
@@ -92,11 +92,13 @@ namespace addressbook_web_tests
             driver.FindElement(By.Name("notes")).Click();
             driver.FindElement(By.Name("notes")).Clear();
             driver.FindElement(By.Name("notes")).SendKeys("notes");*/
+            return this;
         }
 
-        public void EnterContactButton()
+        public ContactHelper EnterContactButton()
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            return this;
         }
     }
 }
