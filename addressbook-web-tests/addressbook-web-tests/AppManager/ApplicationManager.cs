@@ -25,11 +25,20 @@ namespace addressbook_web_tests
             driver = new ChromeDriver();
             baseURL = "http://localhost/addressbook/";
 
-            loginHelper = new LoginHelper(driver);
-            navigate = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver);
-            logoutHelper = new LogoutHelper(driver);
+            loginHelper = new LoginHelper(this);
+            navigate = new NavigationHelper(this,baseURL);
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this);
+            logoutHelper = new LogoutHelper(this);
+        }
+
+        public IWebDriver Driver 
+        {
+            get
+            {
+                return driver;
+            }
+        
         }
 
         public void StopTest()
@@ -82,5 +91,7 @@ namespace addressbook_web_tests
                 return logoutHelper;
             }
         }
+
+        
     }
 }

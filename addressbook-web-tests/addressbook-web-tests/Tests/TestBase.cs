@@ -12,8 +12,6 @@ namespace addressbook_web_tests
     public class TestBase
     {
         protected ApplicationManager app;
-        protected IWebDriver driver;
-
 
         [SetUp]
         public void SetupTest()
@@ -23,14 +21,6 @@ namespace addressbook_web_tests
             app.Navigate.OpenMainPage();
             app.Auth.Login(new AccountData("admin", "secret"));
 
-            /*driver = new ChromeDriver();
-            baseURL = "http://localhost/addressbook/";
-            verificationErrors = new StringBuilder();
-
-            loginHelper = new LoginHelper(driver);
-            navigate = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver);*/
         }
 
         [TearDown]

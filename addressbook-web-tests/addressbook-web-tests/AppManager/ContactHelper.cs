@@ -11,13 +11,21 @@ namespace addressbook_web_tests
     public class ContactHelper : HelperBase
     {
         
-        public ContactHelper(IWebDriver driver) 
-            : base(driver)
+        public ContactHelper(ApplicationManager manager)
+            : base(manager)
         {
         }
 
+        public ContactHelper CreateContact (ContactData contact)
+        {
+            manager.Navigate.GoToAddNewPage();
+            ContactData(contact);
+            return this;
+        } 
+
         public ContactHelper ContactData(ContactData contact)
         {
+            
             driver.FindElement(By.Name("firstname")).Click();
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);

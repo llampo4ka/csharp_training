@@ -11,15 +11,11 @@ namespace addressbook_web_tests
         public void GroupCreationTest()
         {
             
-            app.Navigate.GoToGroupsPage();
+            
             GroupData newgroup = new GroupData("Gr-name");
             newgroup.Header = "gr-header";
             newgroup.Footer = "gr-footer";
-            app.Groups
-                .InitGroupCreation()
-                .FillGroupForm(newgroup)
-                .SubmitGroupButton()
-                .ReturnToGroupsPage();
+            app.Groups.CreateGroup(newgroup);
             app.LogoutHelper.Logout();
         }
 

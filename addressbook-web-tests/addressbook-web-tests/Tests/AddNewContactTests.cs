@@ -12,10 +12,10 @@ namespace addressbook_web_tests
         [Test]
         public void TheAddNewContactTest()
         {
-            app.Navigate.GoToAddNewPage();
+            
             ContactData newcontact = new ContactData("f-name", "l-name");
             newcontact.MiddleName = "m-name";
-            app.Contacts.EnterContactButton();
+            app.Contacts.CreateContact(newcontact);
             app.LogoutHelper.Logout();
         }
 
