@@ -26,7 +26,7 @@ namespace addressbook_web_tests
             baseURL = "http://localhost/addressbook/";
 
             loginHelper = new LoginHelper(this);
-            navigate = new NavigationHelper(this,baseURL);
+            navigate = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
             logoutHelper = new LogoutHelper(this);

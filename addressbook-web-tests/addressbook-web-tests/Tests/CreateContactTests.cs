@@ -1,18 +1,14 @@
-﻿
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class AddNewContactTests : TestBase
+    public class CreateContactTests : TestBase
     {
-        
-
         [Test]
-        public void TheAddNewContactTest()
+        public void CreateNewContactTest()
         {
-            
             ContactData newcontact = new ContactData("f-name", "l-name");
             newcontact.MiddleName = "m-name";
             app.Contacts.CreateContact(newcontact);

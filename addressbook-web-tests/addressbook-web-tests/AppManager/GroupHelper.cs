@@ -26,6 +26,51 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public GroupHelper EditGroup(GroupData newData, int p)
+        {
+            manager.Navigate.GoToGroupsPage();
+            SelectGroupInList(p);
+            SubmitEditGroup();
+            FillGroupForm(newData);
+            SubmitModification();
+            manager.Navigate.GoToGroupsPage();
+            return this;
+        }
+
+        public GroupHelper DeleteGroup (int p)
+        {
+            manager.Navigate.GoToGroupsPage();
+            SelectGroupInList(p);
+            PressDeleteButton();
+            ReturnToGroupsPage();
+            return this;
+
+        }
+
+        public GroupHelper SubmitEditGroup()
+        {
+            driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
+
+        public GroupHelper SubmitModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public GroupHelper PressDeleteButton()
+        {
+            driver.FindElement(By.Name("delete")).Click();
+            return this;
+        }
+
+        public GroupHelper SelectGroupInList(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])["+index+"]")).Click();
+            return this;
+        }
+
         public GroupHelper InitGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();

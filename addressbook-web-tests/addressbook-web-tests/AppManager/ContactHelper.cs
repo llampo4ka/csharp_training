@@ -21,7 +21,56 @@ namespace addressbook_web_tests
             manager.Navigate.GoToAddNewPage();
             ContactData(contact);
             return this;
-        } 
+        }
+        public ContactHelper EditContact(ContactData newData, int p)
+        {
+            manager.Navigate.OpenMainPage();
+            PressEditIcon(p);
+            ContactData(newData);
+            PressUpdateButton();
+            manager.Navigate.OpenMainPage();
+            return this;
+        }
+
+        public ContactHelper DeleteContact(int p)
+        {
+            manager.Navigate.OpenMainPage();
+            SelectContact(p);
+            PressDeleteButton();
+            ConfirmDeleting();
+            return this;
+
+        }
+
+        public ContactHelper ConfirmDeleting()
+        {
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        public ContactHelper PressDeleteButton()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("//input[@id='"+ index +"']")).Click();
+            return this;
+        }
+
+        public ContactHelper PressUpdateButton()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper PressEditIcon(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])["+ index +"]")).Click();
+            return this;
+        }
 
         public ContactHelper ContactData(ContactData contact)
         {
