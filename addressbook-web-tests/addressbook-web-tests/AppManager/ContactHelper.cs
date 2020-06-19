@@ -150,15 +150,6 @@ namespace addressbook_web_tests
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
             return this;
         }
-        private void Type(By locator, string text)
-        {
-            if (text != null)
-            {
-                driver.FindElement(locator).Click();
-                driver.FindElement(locator).Clear();
-                driver.FindElement(locator).SendKeys(text);
-            }
-
-        }
+        
     }
 }
