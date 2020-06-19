@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -11,7 +11,7 @@ namespace addressbook_web_tests
     public class ApplicationManager
     {
         protected IWebDriver driver;
-        private StringBuilder verificationErrors;
+        //private StringBuilder verificationErrors;
         protected string baseURL;
 
         protected LoginHelper loginHelper;
@@ -20,7 +20,9 @@ namespace addressbook_web_tests
         protected ContactHelper contactHelper;
         protected LogoutHelper logoutHelper;
 
-        public ApplicationManager()
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
+
+        private ApplicationManager()
         {
             driver = new ChromeDriver();
             baseURL = "http://localhost/addressbook/";
@@ -32,16 +34,7 @@ namespace addressbook_web_tests
             logoutHelper = new LogoutHelper(this);
         }
 
-        public IWebDriver Driver 
-        {
-            get
-            {
-                return driver;
-            }
-        
-        }
-
-        public void StopTest()
+        ~ApplicationManager()
         {
             try
             {
@@ -51,6 +44,25 @@ namespace addressbook_web_tests
             {
                 // Ignore errors if unable to close the browser
             }
+
+        }
+
+        public static ApplicationManager GetInstance()
+        {
+            if(! app.IsValueCreated)
+            {
+                app.Value = new ApplicationManager();
+            }
+            return app.Value;
+        }
+
+        public IWebDriver Driver 
+        {
+            get
+            {
+                return driver;
+            }
+        
         }
 
         public LoginHelper Auth
