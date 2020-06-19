@@ -74,16 +74,9 @@ namespace addressbook_web_tests
 
         public ContactHelper ContactData(ContactData contact)
         {
-            
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);
-            driver.FindElement(By.Name("middlename")).Click();
-            driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("middlename")).SendKeys(contact.MiddleName);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
+            Type(By.Name("firstname"), contact.FirstName);
+            Type(By.Name("middlename"), contact.MiddleName);
+            Type(By.Name("lastname"), contact.LastName);
             /*driver.FindElement(By.Name("nickname")).Click();
             driver.FindElement(By.Name("nickname")).Clear();
             driver.FindElement(By.Name("nickname")).SendKeys("nick");
@@ -156,6 +149,16 @@ namespace addressbook_web_tests
         {
             driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
             return this;
+        }
+        private void Type(By locator, string text)
+        {
+            if (text != null)
+            {
+                driver.FindElement(locator).Click();
+                driver.FindElement(locator).Clear();
+                driver.FindElement(locator).SendKeys(text);
+            }
+
         }
     }
 }
