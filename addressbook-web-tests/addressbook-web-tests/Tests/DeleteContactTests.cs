@@ -3,13 +3,13 @@
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class DeleteContactTests : TestBase
+    public class DeleteContactTests : AuthTestBase
     {
         [Test]
         public void DeleteContactTest()
         {
             app.Contacts.DeleteContact(1);
-            app.LogoutHelper.Logout();
+            app.Auth.Logout();
 
         }
     }

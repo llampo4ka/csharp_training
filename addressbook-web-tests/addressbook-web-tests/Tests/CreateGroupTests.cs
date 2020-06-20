@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class CreateGroupTests : TestBase
+    public class CreateGroupTests : AuthTestBase
     {
         [Test]
         public void CreateNewGroupTest()
@@ -16,7 +16,7 @@ namespace addressbook_web_tests
             newgroup.Header = "gr-header";
             newgroup.Footer = "gr-footer";
             app.Groups.CreateGroup(newgroup);
-            app.LogoutHelper.Logout();
+            app.Auth.Logout();
         }
 
     }

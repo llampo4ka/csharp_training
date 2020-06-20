@@ -18,7 +18,6 @@ namespace addressbook_web_tests
         protected NavigationHelper navigate;
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
-        protected LogoutHelper logoutHelper;
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
@@ -31,7 +30,6 @@ namespace addressbook_web_tests
             navigate = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
-            logoutHelper = new LogoutHelper(this);
         }
 
         ~ApplicationManager()
@@ -51,7 +49,9 @@ namespace addressbook_web_tests
         {
             if(! app.IsValueCreated)
             {
-                app.Value = new ApplicationManager();
+                ApplicationManager newInstance = new ApplicationManager();
+                newInstance.Navigate.OpenMainPage();
+                app.Value = newInstance;
             }
             return app.Value;
         }
@@ -96,14 +96,7 @@ namespace addressbook_web_tests
                 return contactHelper;
             }
         }
-        public LogoutHelper LogoutHelper
-        {
-            get
-            {
-                return logoutHelper;
-            }
-        }
-
+        
         
     }
 }

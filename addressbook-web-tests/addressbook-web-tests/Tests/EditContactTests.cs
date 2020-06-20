@@ -3,7 +3,7 @@
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class EditContactTests : TestBase
+    public class EditContactTests : AuthTestBase
     {
         [Test]
         public void EditContactTest()
@@ -11,7 +11,7 @@ namespace addressbook_web_tests
             ContactData newData = new ContactData("f-name123", "l-name123");
             newData.MiddleName = "m-name123";
             app.Contacts.EditContact(newData, 1);
-            app.LogoutHelper.Logout();
+            app.Auth.Logout();
         }
 
     }

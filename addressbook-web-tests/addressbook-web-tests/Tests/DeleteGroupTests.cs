@@ -3,13 +3,13 @@
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class DeleteGroupTests : TestBase
+    public class DeleteGroupTests : AuthTestBase
     {
         [Test]
         public void DeleteGroupTest()
         {
             app.Groups.DeleteGroup(2);
-            app.LogoutHelper.Logout();
+            app.Auth.Logout();
         }
     }
 }

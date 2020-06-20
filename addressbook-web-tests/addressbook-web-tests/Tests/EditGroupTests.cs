@@ -3,7 +3,7 @@
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class EditGroupTests : TestBase
+    public class EditGroupTests : AuthTestBase
     {
         [Test]
         public void EditGroupTest()
@@ -13,7 +13,7 @@ namespace addressbook_web_tests
             newData.Footer = "gr-footer22";
 
             app.Groups.EditGroup(newData, 1);
-            app.LogoutHelper.Logout();
+            app.Auth.Logout();
 
         }
     }
