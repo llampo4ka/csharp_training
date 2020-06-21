@@ -20,11 +20,19 @@ namespace addressbook_web_tests
         {
             manager.Navigate.GoToAddNewPage();
             ContactData(contact);
+            PressEnterContactButton();
             return this;
         }
         public ContactHelper EditContact(ContactData newData, int p)
         {
             manager.Navigate.OpenMainPage();
+
+            if(driver.FindElement(By.Id("search_count")).Text == "0")
+            {
+                CreateContact(new ContactData("name1", "surname1"));
+                manager.Navigate.OpenMainPage();
+            }
+
             PressEditIcon(p);
             ContactData(newData);
             PressUpdateButton();
@@ -35,6 +43,13 @@ namespace addressbook_web_tests
         public ContactHelper DeleteContact(int p)
         {
             manager.Navigate.OpenMainPage();
+
+            if (driver.FindElement(By.Id("search_count")).Text == "0")
+            {
+                CreateContact(new ContactData("name1", "surname1"));
+                manager.Navigate.OpenMainPage();
+            }
+
             SelectContact(p);
             PressDeleteButton();
             ConfirmDeleting();
@@ -42,35 +57,7 @@ namespace addressbook_web_tests
 
         }
 
-        public ContactHelper ConfirmDeleting()
-        {
-            driver.SwitchTo().Alert().Accept();
-            return this;
-        }
-
-        public ContactHelper PressDeleteButton()
-        {
-            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            return this;
-        }
-
-        public ContactHelper SelectContact(int index)
-        {
-            driver.FindElement(By.XPath("//input[@id='"+ index +"']")).Click();
-            return this;
-        }
-
-        public ContactHelper PressUpdateButton()
-        {
-            driver.FindElement(By.Name("update")).Click();
-            return this;
-        }
-
-        public ContactHelper PressEditIcon(int index)
-        {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])["+ index +"]")).Click();
-            return this;
-        }
+        
 
         public ContactHelper ContactData(ContactData contact)
         {
@@ -145,11 +132,40 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public ContactHelper EnterContactButton()
+        public ContactHelper PressEnterContactButton()
         {
-            driver.FindElement(By.XPath("(//input[@name='submit'])[2]")).Click();
+            driver.FindElement(By.Name("submit")).Click();
             return this;
         }
-        
+        public ContactHelper ConfirmDeleting()
+        {
+            driver.SwitchTo().Alert().Accept();
+            return this;
+        }
+
+        public ContactHelper PressDeleteButton()
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
+        }
+
+        public ContactHelper PressUpdateButton()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public ContactHelper PressEditIcon(int index)
+        {
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + "]")).Click();
+            return this;
+        }
+
     }
 }
