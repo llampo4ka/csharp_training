@@ -8,6 +8,8 @@ namespace addressbook_web_tests
         [Test]
         public void DeleteGroupTest()
         {
+            app.Groups.CheckGroupExisting();
+
             app.Groups.DeleteGroup(1);
             app.Auth.Logout();
         }

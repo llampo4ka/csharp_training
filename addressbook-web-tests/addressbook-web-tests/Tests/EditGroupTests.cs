@@ -8,6 +8,8 @@ namespace addressbook_web_tests
         [Test]
         public void EditGroupTest()
         {
+            app.Groups.CheckGroupExisting();
+
             GroupData newData = new GroupData("Gr-name22");
             newData.Header = "gr-header22";
             newData.Footer = "gr-footer22";

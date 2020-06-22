@@ -8,6 +8,8 @@ namespace addressbook_web_tests
         [Test]
         public void DeleteContactTest()
         {
+            app.Contacts.CheckContactExisting();
+
             app.Contacts.DeleteContact(1);
             app.Auth.Logout();
 

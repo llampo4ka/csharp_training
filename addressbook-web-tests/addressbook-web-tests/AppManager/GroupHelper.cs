@@ -40,14 +40,22 @@ namespace addressbook_web_tests
         public GroupHelper DeleteGroup (int p)
         {
             manager.Navigate.GoToGroupsPage();
-
-            
-
             SelectGroupInList(p);
             PressDeleteButton();
             ReturnToGroupsPage();
             return this;
 
+        }
+
+        public GroupHelper CheckGroupExisting()
+        {
+            manager.Navigate.GoToGroupsPage();
+
+            if (IsElementPresent(By.Name("selected[]")) == false)
+            {
+                CreateGroup(new GroupData("gr-name"));
+            }
+            return this;
         }
 
         public GroupHelper SubmitEditGroup()
@@ -70,11 +78,6 @@ namespace addressbook_web_tests
 
         public GroupHelper SelectGroupInList(int index)
         {
-            if (IsElementPresent(By.Name("selected[]")) == false)
-            {
-                CreateGroup(new GroupData("gr-name"));
-                manager.Navigate.GoToGroupsPage();
-            }
             driver.FindElement(By.XPath("(//input[@name='selected[]'])["+index+"]")).Click();
             return this;
         }

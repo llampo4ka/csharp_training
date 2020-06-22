@@ -26,13 +26,6 @@ namespace addressbook_web_tests
         public ContactHelper EditContact(ContactData newData, int p)
         {
             manager.Navigate.OpenMainPage();
-
-            if(driver.FindElement(By.Id("search_count")).Text == "0")
-            {
-                CreateContact(new ContactData("name1", "surname1"));
-                manager.Navigate.OpenMainPage();
-            }
-
             PressEditIcon(p);
             ContactData(newData);
             PressUpdateButton();
@@ -43,13 +36,6 @@ namespace addressbook_web_tests
         public ContactHelper DeleteContact(int p)
         {
             manager.Navigate.OpenMainPage();
-
-            if (driver.FindElement(By.Id("search_count")).Text == "0")
-            {
-                CreateContact(new ContactData("name1", "surname1"));
-                manager.Navigate.OpenMainPage();
-            }
-
             SelectContact(p);
             PressDeleteButton();
             ConfirmDeleting();
@@ -129,6 +115,16 @@ namespace addressbook_web_tests
             driver.FindElement(By.Name("notes")).Click();
             driver.FindElement(By.Name("notes")).Clear();
             driver.FindElement(By.Name("notes")).SendKeys("notes");*/
+            return this;
+        }
+
+        public ContactHelper CheckContactExisting()
+        {
+            manager.Navigate.OpenMainPage();
+            if (driver.FindElement(By.Id("search_count")).Text == "0")
+            {
+                CreateContact(new ContactData("name1", "surname1"));
+            }
             return this;
         }
 
