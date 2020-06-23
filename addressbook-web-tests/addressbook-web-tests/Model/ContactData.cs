@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace addressbook_web_tests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string firstname;
         private string middlename = "";
@@ -35,6 +35,51 @@ namespace addressbook_web_tests
         {
             this.firstname = firstname;
             this.lastname = lastname;
+        }
+
+        public bool Equals(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            if (Object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (FirstName == other.FirstName)
+            {
+                return  LastName == other.LastName;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return FirstName.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return "name= " + FirstName + " lastname=" + LastName;
+        }
+
+        public int CompareTo(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+            if (LastName.CompareTo(other.LastName) == 0)
+            {
+                return FirstName.CompareTo(other.FirstName);
+            }
+            
+            return LastName.CompareTo(other.LastName);
+
         }
 
         public string FirstName

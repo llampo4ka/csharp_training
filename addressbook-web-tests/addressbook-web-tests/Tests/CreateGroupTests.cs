@@ -14,9 +14,15 @@ namespace addressbook_web_tests
             newgroup.Header = "gr-header";
             newgroup.Footer = "gr-footer";
 
+            List<GroupData> oldGroups = app.Groups.GetGroupsList();
+
             app.Groups.CreateGroup(newgroup);
 
-            //List<GroupData> groups = app.Groups.GetGroupsList();
+            oldGroups.Add(newgroup);
+            List<GroupData> newGroups = app.Groups.GetGroupsList();
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
             
         }
 

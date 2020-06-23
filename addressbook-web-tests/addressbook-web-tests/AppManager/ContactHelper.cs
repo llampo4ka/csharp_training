@@ -23,6 +23,9 @@ namespace addressbook_web_tests
             PressEnterContactButton();
             return this;
         }
+
+        
+
         public ContactHelper EditContact(ContactData newData, int p)
         {
             manager.Navigate.OpenMainPage();
@@ -147,7 +150,7 @@ namespace addressbook_web_tests
 
         public ContactHelper SelectContact(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click();
             return this;
         }
 
@@ -159,9 +162,37 @@ namespace addressbook_web_tests
 
         public ContactHelper PressEditIcon(int index)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + index + "]")).Click();
+            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index+1) + "]")).Click();
             return this;
         }
 
+        internal List<ContactData> GetContactsList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigate.OpenMainPage();
+            ICollection<IWebElement> elements1 = driver.FindElements(By.XPath("//tr[@name='entry']/td[3]"));
+            ICollection<IWebElement> elements2 = driver.FindElements(By.XPath("//tr[@name='entry']/td[2]"));
+            
+            string[] firstNames = new string[elements1.Count];
+            int i = 0;
+            foreach (IWebElement element1 in elements1)
+            {
+                firstNames[i] = element1.Text;
+                i++;
+            }
+
+            int k = 0;
+            foreach (IWebElement element2 in elements2)
+            {
+                ContactData contact = new ContactData("a", "a");
+                contact.FirstName = firstNames[k];
+                k++;
+                contact.LastName = element2.Text;
+
+                contacts.Add(contact);
+            }
+
+            return contacts;
+        }
     }
 }
