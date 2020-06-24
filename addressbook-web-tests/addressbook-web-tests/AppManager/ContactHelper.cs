@@ -134,17 +134,20 @@ namespace addressbook_web_tests
         public ContactHelper PressEnterContactButton()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
             return this;
         }
         public ContactHelper ConfirmDeleting()
         {
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
         }
 
         public ContactHelper PressDeleteButton()
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -166,33 +169,37 @@ namespace addressbook_web_tests
             return this;
         }
 
-        internal List<ContactData> GetContactsList()
+        private List<ContactData> contactCache = null;
+        public List<ContactData> GetContactsList()
         {
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigate.OpenMainPage();
-            ICollection<IWebElement> elements1 = driver.FindElements(By.XPath("//tr[@name='entry']/td[3]"));
-            ICollection<IWebElement> elements2 = driver.FindElements(By.XPath("//tr[@name='entry']/td[2]"));
-            
-            string[] firstNames = new string[elements1.Count];
-            int i = 0;
-            foreach (IWebElement element1 in elements1)
+            if(contactCache == null)
             {
-                firstNames[i] = element1.Text;
-                i++;
+                contactCache = new List<ContactData>();
+                manager.Navigate.OpenMainPage();
+                ICollection<IWebElement> elements1 = driver.FindElements(By.XPath("//tr[@name='entry']/td[3]"));
+                ICollection<IWebElement> elements2 = driver.FindElements(By.XPath("//tr[@name='entry']/td[2]"));
+
+                string[] firstNames = new string[elements1.Count];
+                int i = 0;
+                foreach (IWebElement element1 in elements1)
+                {
+                    firstNames[i] = element1.Text;
+                    i++;
+                }
+
+                int k = 0;
+                foreach (IWebElement element2 in elements2)
+                {
+                    ContactData contact = new ContactData("a", "a");
+                    contact.FirstName = firstNames[k];
+                    k++;
+                    contact.LastName = element2.Text;
+
+                    contactCache.Add(contact);
+                }
             }
 
-            int k = 0;
-            foreach (IWebElement element2 in elements2)
-            {
-                ContactData contact = new ContactData("a", "a");
-                contact.FirstName = firstNames[k];
-                k++;
-                contact.LastName = element2.Text;
-
-                contacts.Add(contact);
-            }
-
-            return contacts;
+            return new List<ContactData>(contactCache);
         }
     }
 }

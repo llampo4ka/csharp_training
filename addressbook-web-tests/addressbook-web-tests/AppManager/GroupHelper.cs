@@ -69,12 +69,14 @@ namespace addressbook_web_tests
         public GroupHelper SubmitModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            groupCache = null;
             return this;
         }
 
         public GroupHelper PressDeleteButton()
         {
             driver.FindElement(By.Name("delete")).Click();
+            groupCache = null;
             return this;
         }
 
@@ -105,6 +107,7 @@ namespace addressbook_web_tests
         public GroupHelper SubmitGroupButton()
         {
             driver.FindElement(By.Name("submit")).Click();
+            groupCache = null;
             return this;
         }
         public GroupHelper ReturnToGroupsPage()
@@ -113,17 +116,21 @@ namespace addressbook_web_tests
             return this;
         }
 
+        private List<GroupData> groupCache = null;
         public List<GroupData> GetGroupsList()
         {
-            List<GroupData> groups = new List<GroupData>();
-            manager.Navigate.GoToGroupsPage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
-            foreach (IWebElement element in elements)
+            if(groupCache == null)
             {
-                groups.Add(new GroupData(element.Text));
+                groupCache = new List<GroupData>();
+                manager.Navigate.GoToGroupsPage();
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
+                foreach (IWebElement element in elements)
+                {
+                    groupCache.Add(new GroupData(element.Text));
+                }
             }
 
-            return groups;
+            return new List<GroupData>(groupCache);
         }
 
     }
