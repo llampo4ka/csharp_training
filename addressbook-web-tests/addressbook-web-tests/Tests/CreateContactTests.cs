@@ -18,6 +18,19 @@ namespace addressbook_web_tests
             List<ContactData> newContacts = app.Contacts.GetContactsList();
             oldContacts.Add(newcontact);
 
+            System.Console.WriteLine("Old List");
+            foreach (var item in oldContacts)
+            {
+                System.Console.Write(item.FirstName + " - " + item.LastName);
+            }
+
+            System.Console.WriteLine();
+            System.Console.WriteLine("New List");
+            foreach (var item in newContacts)
+            {
+                System.Console.Write(item.FirstName + " - " + item.LastName);
+            }
+
             oldContacts.Sort();
             newContacts.Sort();
            

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
@@ -176,27 +178,15 @@ namespace addressbook_web_tests
             {
                 contactCache = new List<ContactData>();
                 manager.Navigate.OpenMainPage();
-                ICollection<IWebElement> elements1 = driver.FindElements(By.XPath("//tr[@name='entry']/td[3]"));
-                ICollection<IWebElement> elements2 = driver.FindElements(By.XPath("//tr[@name='entry']/td[2]"));
 
-                string[] firstNames = new string[elements1.Count];
-                int i = 0;
-                foreach (IWebElement element1 in elements1)
+                ICollection<IWebElement> listAllEntryTr = driver.FindElements(By.XPath("//tr[@name='entry']"));
+                
+                foreach (IWebElement element in listAllEntryTr)
                 {
-                    firstNames[i] = element1.Text;
-                    i++;
+                    ReadOnlyCollection<IWebElement> eaa = element.FindElements(By.TagName("td"));
+                    contactCache.Add(new ContactData(eaa[2].Text, eaa[1].Text));
                 }
-
-                int k = 0;
-                foreach (IWebElement element2 in elements2)
-                {
-                    ContactData contact = new ContactData("a", "a");
-                    contact.FirstName = firstNames[k];
-                    k++;
-                    contact.LastName = element2.Text;
-
-                    contactCache.Add(contact);
-                }
+               
             }
 
             return new List<ContactData>(contactCache);
