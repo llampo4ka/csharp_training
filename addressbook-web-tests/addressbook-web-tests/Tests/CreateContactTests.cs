@@ -9,8 +9,15 @@ namespace addressbook_web_tests
         [Test]
         public void CreateNewContactTest()
         {
-            ContactData newcontact = new ContactData("onef-name", "twol-name");
-            newcontact.MiddleName = "m-name";
+            ContactData newcontact = new ContactData("23f-name", "23l-name")
+            {
+                MiddleName = "m-name23",
+                Address = "Str SGhd 12, ap 36",
+                MobilePhone = "+7 (2374) 2-4-5",
+                WorkPhone = "9(938) 2-3-4",
+                Email = "test@tse.ted"
+            };
+            
             List<ContactData> oldContacts = app.Contacts.GetContactsList();
 
             app.Contacts.CreateContact(newcontact);

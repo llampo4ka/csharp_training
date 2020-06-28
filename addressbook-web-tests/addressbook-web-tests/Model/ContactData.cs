@@ -8,33 +8,12 @@ namespace addressbook_web_tests
 {
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
-        private string firstname;
-        private string middlename = "";
-        private string lastname;
-        private string nickname = "";
-        private string title = "";
-        private string company = "";
-        private string address = "";
-        private string homePhone = "";
-        private string mobilePhone = "";
-        private string workPhone = "";
-        private string fax = "";
-        private string homepage = "";
-        private string bday = "";
-        private string bmonth = "";
-        private string byear = "";
-        private string aday = "";
-        private string amonth = "";
-        private string ayear = "";
-        private string new_group = "";
-        private string address2 = "";
-        private string phone2 = "";
-        private string notes="";
+        private string allPhones;
 
         public ContactData (string firstname, string lastname)
         {
-            this.firstname = firstname;
-            this.lastname = lastname;
+            FirstName = firstname;
+            LastName = lastname;
         }
 
         public bool Equals(ContactData other)
@@ -82,41 +61,44 @@ namespace addressbook_web_tests
 
         }
 
-        public string FirstName
+        public string FirstName { get; set; }
+
+        public string MiddleName { get; set; }
+
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string HomePhone { get; set; }
+        public string WorkPhone { get; set; }
+        public string MobilePhone { get; set; }
+        public string AllPhones
         {
             get
             {
-                return firstname;
+                if(allPhones != null)
+                {
+                    return allPhones;
+                }
+                else
+                {
+                    return (CleanUp(HomePhone) + CleanUp(MobilePhone) + CleanUp(WorkPhone)).Trim();
+                }                
             }
             set
             {
-                firstname = value;
+                allPhones = value;
             }
         }
 
-        public string MiddleName
+        private string CleanUp(string phone)
         {
-            get
+            if (phone == null || phone == "")
             {
-                return middlename;
+                return "";
             }
-            set
-            {
-                middlename = value;
-            }
+            return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
         }
 
-        public string LastName
-        {
-            get
-            {
-                return lastname;
-            }
-            set
-            {
-                lastname = value;
-            }
-        }
+        public string Email { get; set; }
 
     }
 }
