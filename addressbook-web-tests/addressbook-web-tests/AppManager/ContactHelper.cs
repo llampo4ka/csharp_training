@@ -39,6 +39,8 @@ namespace addressbook_web_tests
             return this;
         }
 
+        
+
         public ContactHelper DeleteContact(int p)
         {
             manager.Navigate.OpenMainPage();
@@ -61,6 +63,8 @@ namespace addressbook_web_tests
             Type(By.Name("mobile"), contact.MobilePhone);
             Type(By.Name("work"), contact.WorkPhone);
             Type(By.Name("email"), contact.Email);
+            Type(By.Name("email2"), contact.Email2);
+            Type(By.Name("email3"), contact.Email3);
             /*driver.FindElement(By.Name("nickname")).Click();
             driver.FindElement(By.Name("nickname")).Clear();
             driver.FindElement(By.Name("nickname")).SendKeys("nick");
@@ -162,6 +166,14 @@ namespace addressbook_web_tests
             return this;
         }
 
+        private void PressManIcon(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6]
+                .FindElement(By.TagName("a")).Click();
+           
+        }
+
         private List<ContactData> contactCache = null;
         public List<ContactData> GetContactsList()
         {
@@ -192,11 +204,13 @@ namespace addressbook_web_tests
             string lastName = cells[1].Text;
             string firstName = cells[2].Text;
             string address = cells[3].Text;
+            string allEmails = cells[4].Text;
             string allPhones = cells[5].Text;
 
             return new ContactData(firstName, lastName)
             {
                 Address = address,
+                AllEmails = allEmails,
                 AllPhones = allPhones
             };
         }
@@ -204,10 +218,11 @@ namespace addressbook_web_tests
         public ContactData GetContactInformationFromForm(int index)
         {
             manager.Navigate.OpenMainPage();
-            PressEditIcon(0);
+            PressEditIcon(index);
 
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
             
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
@@ -215,16 +230,31 @@ namespace addressbook_web_tests
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
 
             string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
+            string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
 
 
             return new ContactData(firstName, lastName) {
+                MiddleName = middleName,
                 Address = address,
-                HomePhone = homePhone,
-                Email = email,
+                HomePhone = homePhone,                
                 MobilePhone = mobilePhone,
-                WorkPhone = workPhone
+                WorkPhone = workPhone,
+                Email = email,
+                Email2 = email2,
+                Email3 = email3
             };
         }
 
+        public string GetContactInformationFromPage(int index)
+        {
+            manager.Navigate.OpenMainPage();
+            PressManIcon(index);
+            var datas = driver.FindElement(By.Id("content"));
+            string datasText = datas.Text; 
+            return datasText;
+        }
+
+        
     }
 }
