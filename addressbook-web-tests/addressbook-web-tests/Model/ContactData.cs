@@ -10,7 +10,7 @@ namespace addressbook_web_tests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
-        private object allEmails;
+        private string allEmails;
 
         public ContactData (string firstname, string lastname)
         {
@@ -111,7 +111,7 @@ namespace addressbook_web_tests
             {
                 if (allEmails != null)
                 {
-                    return AllEmails;
+                    return allEmails;
                 }
                 else
                 {
