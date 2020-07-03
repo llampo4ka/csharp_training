@@ -6,17 +6,29 @@ namespace addressbook_web_tests
     [TestFixture]
     public class CreateContactTests : AuthTestBase
     {
-        [Test]
-        public void CreateNewContactTest()
+        public static IEnumerable<ContactData> RandomGroupDataProvider()
         {
-            ContactData newcontact = new ContactData("23f-name", "23l-name")
+            List<ContactData> contacts = new List<ContactData>();
+            for (int i = 0; i < 5; i++)
+            {
+                contacts.Add(new ContactData(GenerateRandomString(15), GenerateRandomString(15))
+                {
+                    MiddleName = GenerateRandomString(30)
+                });
+            }
+            return contacts;
+        }
+        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public void CreateNewContactTest(ContactData newcontact)
+        {
+            /*ContactData newcontact = new ContactData("23f-name", "23l-name")
             {
                 MiddleName = "m-name23",
                 Address = "Str SGhd 12, ap 36",
                 MobilePhone = "+7 (2374) 2-4-5",
                 WorkPhone = "9(938) 2-3-4",
                 Email = "test@tse.ted"
-            };
+            };*/
             
             List<ContactData> oldContacts = app.Contacts.GetContactsList();
 
