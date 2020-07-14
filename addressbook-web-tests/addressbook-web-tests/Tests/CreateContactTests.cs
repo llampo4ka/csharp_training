@@ -1,12 +1,15 @@
 ﻿using NUnit.Framework;
 using System.Collections.Generic;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace addressbook_web_tests
 {
     [TestFixture]
     public class CreateContactTests : AuthTestBase
     {
-        public static IEnumerable<ContactData> RandomGroupDataProvider()
+        public static IEnumerable<ContactData> RandomContactDataProvider()
         {
             List<ContactData> contacts = new List<ContactData>();
             for (int i = 0; i < 5; i++)
@@ -18,7 +21,21 @@ namespace addressbook_web_tests
             }
             return contacts;
         }
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+
+        public static IEnumerable<ContactData> ContactDataFromXmlFile()
+        {
+            return (List<ContactData>)
+                 new XmlSerializer(typeof(List<ContactData>))
+                     .Deserialize(new StreamReader(@"contacts.xml"));
+        }
+
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>(
+                File.ReadAllText(@"contacts.json"));
+        }
+
+        [Test, TestCaseSource("ContactDataFromJsonFile")]
         public void CreateNewContactTest(ContactData newcontact)
         {
             /*ContactData newcontact = new ContactData("23f-name", "23l-name")
