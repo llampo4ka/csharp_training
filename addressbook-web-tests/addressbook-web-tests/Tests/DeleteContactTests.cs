@@ -10,17 +10,24 @@ namespace addressbook_web_tests
         public void DeleteContactTest()
         {
             app.Contacts.CheckContactExisting();
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
 
-            app.Contacts.DeleteContact(0);
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData toBeRemoved = oldContacts[0];
+
+            app.Contacts.DeleteContact(toBeRemoved);
             
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.RemoveAt(0);
 
             oldContacts.Sort();
             newContacts.Sort();
 
             Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contact in newContacts)
+            {
+                Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
+            }
 
         }
     }

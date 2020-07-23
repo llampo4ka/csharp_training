@@ -10,16 +10,18 @@ namespace addressbook_web_tests
         public void EditContactTest()
         {
             app.Contacts.CheckContactExisting();
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData oldContact = oldContacts[0];
 
             ContactData newData = new ContactData("f-name123", "l-name123");
             newData.MiddleName = "m-name123";
 
-            app.Contacts.EditContact(newData, 0);
+            app.Contacts.EditContact(newData, oldContact.Id);
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
-            oldContacts[0].FirstName = newData.FirstName;
-            oldContacts[0].LastName = newData.LastName;
+            List<ContactData> newContacts = ContactData.GetAll();
+            oldContact.FirstName = newData.FirstName;
+            oldContact.LastName = newData.LastName;
 
             oldContacts.Sort();
             newContacts.Sort();

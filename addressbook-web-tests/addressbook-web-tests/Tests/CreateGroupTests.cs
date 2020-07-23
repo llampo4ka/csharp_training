@@ -2,16 +2,14 @@
 using NUnit.Framework;
 using System.IO;
 using System.Collections.Generic;
-using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-using System.Linq;
-using System;
+
 
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class CreateGroupTests : AuthTestBase
+    public class CreateGroupTests : GroupTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider()
         {

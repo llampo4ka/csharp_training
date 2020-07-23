@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using OpenQA.Selenium;
 
 
 namespace addressbook_web_tests
@@ -13,11 +9,14 @@ namespace addressbook_web_tests
     {
         protected ApplicationManager app;
 
+        public static bool PERFORM_LONG_UI_CHECKS = false;
+
         [SetUp]
         public void SetupApplicationManager()
         {
 
             app = ApplicationManager.GetInstance();
+
             app.Auth.Login(new AccountData("admin", "secret"));
 
         }

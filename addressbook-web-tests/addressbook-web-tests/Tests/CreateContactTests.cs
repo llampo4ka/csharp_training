@@ -46,15 +46,15 @@ namespace addressbook_web_tests
                 WorkPhone = "9(938) 2-3-4",
                 Email = "test@tse.ted"
             };*/
-            
-            List<ContactData> oldContacts = app.Contacts.GetContactsList();
+
+            List<ContactData> oldContacts = ContactData.GetAll();
 
             app.Contacts.CreateContact(newcontact);
 
-            List<ContactData> newContacts = app.Contacts.GetContactsList();
+            List<ContactData> newContacts = ContactData.GetAll();
             oldContacts.Add(newcontact);
 
-            System.Console.WriteLine("Old List");
+            /*System.Console.WriteLine("Old List");
             foreach (var item in oldContacts)
             {
                 System.Console.Write(item.FirstName + " - " + item.LastName);
@@ -65,7 +65,7 @@ namespace addressbook_web_tests
             foreach (var item in newContacts)
             {
                 System.Console.Write(item.FirstName + " - " + item.LastName);
-            }
+            }*/
 
             oldContacts.Sort();
             newContacts.Sort();

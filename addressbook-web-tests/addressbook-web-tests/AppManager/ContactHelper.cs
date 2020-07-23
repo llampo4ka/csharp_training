@@ -39,7 +39,17 @@ namespace addressbook_web_tests
             return this;
         }
 
-        
+        public ContactHelper EditContact(ContactData newData, string id)
+        {
+            manager.Navigate.OpenMainPage();
+            PressEditIcon(id);
+            ContactData(newData);
+            PressUpdateButton();
+            manager.Navigate.OpenMainPage();
+            return this;
+        }
+
+
 
         public ContactHelper DeleteContact(int p)
         {
@@ -51,7 +61,17 @@ namespace addressbook_web_tests
 
         }
 
-        
+        public ContactHelper DeleteContact(ContactData contact)
+        {
+            manager.Navigate.OpenMainPage();
+            SelectContact(contact.Id);
+            PressDeleteButton();
+            ConfirmDeleting();
+            return this;
+
+        }
+
+
 
         public ContactHelper ContactData(ContactData contact)
         {
@@ -154,6 +174,12 @@ namespace addressbook_web_tests
             return this;
         }
 
+        public ContactHelper SelectContact(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'and @value='" + id + "'])")).Click();
+            return this;
+        }
+
         public ContactHelper PressUpdateButton()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -162,7 +188,13 @@ namespace addressbook_web_tests
 
         public ContactHelper PressEditIcon(int index)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])[" + (index+1) + "]")).Click();
+            driver.FindElement(By.XPath("(//a[@alt='Edit'] and )[" + (index+1) + "]")).Click(); 
+            return this;
+        }
+
+        public ContactHelper PressEditIcon(string id)
+        {
+            driver.FindElement(By.XPath("(//a[contains(@href,'edit.php?id=" + id +"')])")).Click();
             return this;
         }
 
