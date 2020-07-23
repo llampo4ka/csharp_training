@@ -14,12 +14,14 @@ namespace addressbook_web_tests
             GroupData newData = new GroupData("Gr-name22");
             newData.Header = "gr-header22";
             newData.Footer = "gr-footer22";
-            List<GroupData> oldGroups = app.Groups.GetGroupsList();
 
-            app.Groups.EditGroup(newData, 0);
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData oldData = oldGroups[0];
 
-            List<GroupData> newGroups = app.Groups.GetGroupsList();
-            oldGroups[0].Name = newData.Name;
+            app.Groups.EditGroup(newData, oldData.Id);
+
+            List<GroupData> newGroups = GroupData.GetAll();
+            //oldGroups[0].Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
