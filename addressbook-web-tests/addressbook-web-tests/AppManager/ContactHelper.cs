@@ -96,6 +96,26 @@ namespace addressbook_web_tests
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
 
+        internal void DeleteContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigate.OpenMainPage();
+            SelectGroupInFilter(group.Name);
+            SelectContact(contact.Id);
+            RemoveFromGroupButton();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => driver.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+
+        }
+
+        private void RemoveFromGroupButton()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectGroupInFilter(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(name);
+        }
+
         public ContactHelper ContactData(ContactData contact)
         {
             Type(By.Name("firstname"), contact.FirstName);
