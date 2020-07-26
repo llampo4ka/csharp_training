@@ -9,7 +9,7 @@ namespace addressbook_web_tests
     {
         protected ApplicationManager app;
 
-        public static bool PERFORM_LONG_UI_CHECKS = false;
+        public static bool PERFORM_LONG_UI_CHECKS = true;
 
         [SetUp]
         public void SetupApplicationManager()

@@ -10,16 +10,13 @@ namespace addressbook_web_tests
     [Table(Name = "group_list")]
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
-        private string name;
-        private string header = "";
-        private string footer = "";
 
         public GroupData()
         {
         }
         public GroupData(string name)
         {
-            this.name = name;
+            Name = name;
         }
 
         public bool Equals (GroupData other)
@@ -73,6 +70,16 @@ namespace addressbook_web_tests
             using (AddressBookDB db = new AddressBookDB())
             {
                 return (from g in db.Groups select g).ToList();
+            }
+        }
+
+        public List<ContactData> GetContacts()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from c in db.Contacts
+                            from gcr in db.GCRelation.Where(p => p.GroupId == Id && p.ContactId == c.Id && c.Deprecated == "0000-00-00 00:00:00")
+                        select c).Distinct().ToList();
             }
         }
     }

@@ -32,9 +32,10 @@ namespace addressbook_web_tests
             foreach (string l in lines)
             {
                 string[] parts = l.Split(',');
-                groups.Add(new GroupData(parts[0]) { 
+                groups.Add(new GroupData(parts[0])
+                {
                     Header = parts[1],
-                    Footer = parts[2]                
+                    Footer = parts[2]
                 });
             }
             return groups;
@@ -42,9 +43,9 @@ namespace addressbook_web_tests
 
         public static IEnumerable<GroupData> GroupDataFromXmlFile()
         {
-           return (List<GroupData>)
-                new XmlSerializer(typeof(List<GroupData>))
-                    .Deserialize(new StreamReader(@"groups.xml"));
+            return (List<GroupData>)
+                 new XmlSerializer(typeof(List<GroupData>))
+                     .Deserialize(new StreamReader(@"groups.xml"));
         }
 
         public static IEnumerable<GroupData> GroupDataFromJsonFile()
@@ -66,7 +67,7 @@ namespace addressbook_web_tests
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
-            
+
         }
 
         /*[Test]
@@ -84,5 +85,13 @@ namespace addressbook_web_tests
 
         }*/
 
+        [Test]
+        public void TestDBConnectivity()
+        {
+            foreach (ContactData contact in GroupData.GetAll()[0].GetContacts())
+            {
+                System.Console.Out.WriteLine(contact);
+            }
+        }
     }
 }

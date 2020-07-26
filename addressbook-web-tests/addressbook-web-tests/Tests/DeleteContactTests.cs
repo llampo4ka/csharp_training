@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class DeleteContactTests : AuthTestBase
+    public class DeleteContactTests : ContactTestBase
     {
         [Test]
         public void DeleteContactTest()

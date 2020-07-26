@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 
 namespace addressbook_web_tests
 {
@@ -26,8 +27,6 @@ namespace addressbook_web_tests
             PressEnterContactButton();
             return this;
         }
-
-        
 
         public ContactHelper EditContact(ContactData newData, int p)
         {
@@ -67,11 +66,35 @@ namespace addressbook_web_tests
             SelectContact(contact.Id);
             PressDeleteButton();
             ConfirmDeleting();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => driver.FindElements(By.CssSelector("div.msgbox")).Count > 0);
             return this;
 
         }
 
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigate.OpenMainPage();
+            ClearGroupFilter();
+            SelectContact(contact.Id);
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).Until(d => driver.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+        }
 
+        private void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
 
         public ContactHelper ContactData(ContactData contact)
         {

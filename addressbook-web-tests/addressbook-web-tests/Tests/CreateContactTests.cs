@@ -7,7 +7,7 @@ using System.IO;
 namespace addressbook_web_tests
 {
     [TestFixture]
-    public class CreateContactTests : AuthTestBase
+    public class CreateContactTests : ContactTestBase
     {
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -47,7 +47,7 @@ namespace addressbook_web_tests
                 Email = "test@tse.ted"
             };*/
 
-            List<ContactData> oldContacts = ContactData.GetAll();
+            List<ContactData> oldContacts = app.Contacts.GetContactsList();
 
             app.Contacts.CreateContact(newcontact);
 
