@@ -9,7 +9,7 @@ namespace addressbook_web_tests
         [Test]
         public void EditContactTest()
         {
-            app.Contacts.CheckContactExisting();
+            app.Contacts.ExistingContactsCheck();
 
             List<ContactData> oldContacts = ContactData.GetAll();
             ContactData oldContact = oldContacts[0];

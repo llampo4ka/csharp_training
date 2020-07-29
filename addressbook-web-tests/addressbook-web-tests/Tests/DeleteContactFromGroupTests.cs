@@ -12,8 +12,19 @@ namespace addressbook_web_tests
         [Test]
         public void DeleteContactFromGroupTest()
         {
+            app.Groups.CheckGroupExisting();
+            app.Contacts.ExistingContactsCheck();
+            
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
+
+            if (oldList.Count == 0)
+            {
+                ContactData cont = ContactData.GetAll()[0];
+                app.Contacts.AddContactToGroup(cont, group);
+                oldList = group.GetContacts();
+            }
+
             ContactData contact = oldList.First();
             System.Console.Out.WriteLine(group.Name);
             System.Console.Out.WriteLine(contact.FirstName);

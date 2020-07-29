@@ -168,5 +168,15 @@ namespace addressbook_web_tests
             }
         }
 
+        public List<GroupData> GetGroups()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Groups
+                        from gcr in db.GCRelation.Where(p => p.ContactId == Id && p.GroupId == g.Id && g.Deprecated == "0000-00-00 00:00:00")
+                        select g).Distinct().ToList();
+            }
+        }
+
     }
 }

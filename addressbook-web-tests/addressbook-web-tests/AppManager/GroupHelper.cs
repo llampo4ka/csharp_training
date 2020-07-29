@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenQA.Selenium;
 
 namespace addressbook_web_tests
@@ -21,8 +22,6 @@ namespace addressbook_web_tests
             ReturnToGroupsPage();
             return this;
         }
-
-        
 
         public GroupHelper EditGroup(GroupData newData, int p)
         {
@@ -159,5 +158,21 @@ namespace addressbook_web_tests
             return new List<GroupData>(groupCache);
         }
 
+        public void CheckContactOutOfGroups()
+        {
+            ContactData contact = ContactData.GetAll()[0];
+            List<GroupData> groupsList = GroupData.GetAll();
+            List<GroupData> contactGroupsList = contact.GetGroups();
+
+            groupsList.Sort();
+            contactGroupsList.Sort();
+
+            if (groupsList.SequenceEqual(contactGroupsList))
+            {
+                CreateGroup(new GroupData
+                    (TestBase.GenerateRandomString(10)));
+            }
+
+        }
     }
 }

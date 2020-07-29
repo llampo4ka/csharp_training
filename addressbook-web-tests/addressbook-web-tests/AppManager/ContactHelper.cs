@@ -20,6 +20,7 @@ namespace addressbook_web_tests
         }
 
         
+
         public ContactHelper CreateContact (ContactData contact)
         {
             manager.Navigate.GoToAddNewPage();
@@ -181,15 +182,8 @@ namespace addressbook_web_tests
             return this;
         }
 
-        public ContactHelper CheckContactExisting()
-        {
-            manager.Navigate.OpenMainPage();
-            if (driver.FindElement(By.Id("search_count")).Text == "0")
-            {
-                CreateContact(new ContactData("name1", "surname1"));
-            }
-            return this;
-        }
+        
+        
 
         public ContactHelper PressEnterContactButton()
         {
@@ -331,5 +325,17 @@ namespace addressbook_web_tests
         }
 
         
+
+        public ContactHelper ExistingContactsCheck()
+        {
+            manager.Navigate.OpenMainPage();
+            if (driver.FindElement(By.Id("search_count")).Text == "0")
+            {
+                CreateContact(new ContactData("name1", "surname1"));
+            }
+            return this;
+        }
+
+
     }
 }

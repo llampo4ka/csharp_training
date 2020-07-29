@@ -12,9 +12,15 @@ namespace addressbook_web_tests
         [Test]
         public void AddContactToGroupTest()
         {
+
+
+            app.Contacts.ExistingContactsCheck();
+            app.Groups.CheckContactOutOfGroups();
+
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
             ContactData contact = ContactData.GetAll().Except(oldList).First();
+            
 
             app.Contacts.AddContactToGroup(contact, group);
 
